@@ -1,0 +1,16 @@
+# streamlit
+# google-generativeai
+# python-dotenv
+#  ipython
+# typer
+# phi
+# pypdf
+sqlalchemy
+pgvector
+psycopg[binary]
+google-generativeai
+python-dotenv
+langchain
+PyPDF2
+chromadb
+faiss-cpu
