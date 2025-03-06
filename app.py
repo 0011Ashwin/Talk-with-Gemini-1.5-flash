@@ -5,15 +5,16 @@ from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables from .env.
 
+# importing libraries
 import streamlit as st
 import os
 import pathlib
 import textwrap
-
-import google.generativeai as genai
-
 from IPython.display import display
 from IPython.display import Markdown
+import google.generativeai as genai
+
+
 
 
 def to_markdown(text):
@@ -34,7 +35,11 @@ def get_gemini_response(question):
 
 st.set_page_config(page_title="Q&A Demo")
 
-st.header("Talk with Gemini-flash-1.5🚨🔍")
+# streamlit header part 
+st.header("Gemini-flash-1.5🚨🔍")
+
+# streamlit sub-header part 
+st.subheader("Hey, there! I am Gemini-flash-1.5, a Q&A chatbot. Ask me anything!🤖🔮")
 
 input=st.text_input("Input: ",key="input")
 
