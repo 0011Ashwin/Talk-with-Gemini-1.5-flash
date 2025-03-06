@@ -1,10 +1,10 @@
-# streamlit
-# google-generativeai
-# python-dotenv
-#  ipython
-# typer
-# phi
-# pypdf
+streamlit
+google-generativeai
+python-dotenv
+ipython
+typer
+phi
+pypdf
 sqlalchemy
 pgvector
 psycopg[binary]
@@ -15,3 +15,4 @@ PyPDF2
 chromadb
 faiss-cpu
 IPython
+flask
