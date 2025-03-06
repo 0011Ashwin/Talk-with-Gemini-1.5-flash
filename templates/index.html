@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Gemini-flash-1.5 🚨🔍</h1>
+        <h2>Hey there! Ask me anything! 🤖🔮</h2>
+        <form method="post">
+            <input type="text" name="question" placeholder="Enter your question..." required>
+            <button type="submit">Ask</button>
+        </form>
+        {% if response %}
+            <div class="response">
+                <h3>The Response is:</h3>
+                <p>{{ response }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
