@@ -3,56 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini Chat Interface</title>
+    <title>Gemini</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Product+Sans:wght@400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="https://www.gstatic.com/lamda/images/favicon_v1_150160cddff7f294ce30.png">
 </head>
 <body>
     <div class="chat-container">
         <div class="sidebar">
+            <div class="gemini-logo">
+                <svg width="32" height="32" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="gemini-sparkle">
+                    <path d="M132 38H158C158 38 158 58 158 80C158 102 158 122 158 122H132V38Z" fill="#8AB4F8"/>
+                    <path d="M158 122H132V38H158V122Z" fill="#8AB4F8"/>
+                    <path d="M34 122H60V38H34C34 38 34 58 34 80C34 102 34 122 34 122Z" fill="#8AB4F8"/>
+                    <path d="M34 38H60V122H34V38Z" fill="#8AB4F8"/>
+                    <path d="M60 70H132V90H60V70Z" fill="#8AB4F8"/>
+                    <path d="M60 38H132V70H60V38Z" fill="#1A73E8"/>
+                    <path d="M60 90H132V122H60V90Z" fill="#1A73E8"/>
+                    <path d="M96 145H132V155H96V145Z" fill="#8AB4F8"/>
+                    <path d="M150 145H160V155H150V145Z" fill="#8AB4F8"/>
+                </svg>
+                <h2>Gemini</h2>
+            </div>
             <div class="new-chat">
-                <button id="newChatBtn"><i class="fas fa-plus"></i> New Chat</button>
+                <button id="newChatBtn"><i class="fas fa-plus"></i> New chat</button>
             </div>
             <div class="chat-history">
-                <!-- Chat history will be populated here -->
+                <!-- Sample history items -->
+                <div class="history-item">
+                    <i class="far fa-comment"></i> About Gemini AI
+                </div>
+                <div class="history-item">
+                    <i class="far fa-comment"></i> Python development
+                </div>
             </div>
         </div>
         <div class="main-content">
             <div class="chat-header">
-                <h1>Gemini Chat</h1>
+                <h1>Gemini</h1>
                 <div class="header-actions">
-                    <button class="theme-toggle"><i class="fas fa-moon"></i></button>
-                    <button class="settings-btn"><i class="fas fa-cog"></i></button>
+                    <button class="theme-toggle" title="Toggle theme"><i class="fas fa-moon"></i></button>
+                    <button class="settings-btn" title="Settings"><i class="fas fa-cog"></i></button>
                 </div>
             </div>
+            
+            <!-- Welcome screen (shown when chat history is empty) -->
+            {% if not chat_history %}
+            <div class="welcome-screen">
+                <div class="gemini-hero">
+                    <svg width="80" height="80" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="gemini-hero-logo">
+                        <path d="M132 38H158C158 38 158 58 158 80C158 102 158 122 158 122H132V38Z" fill="#8AB4F8"/>
+                        <path d="M158 122H132V38H158V122Z" fill="#8AB4F8"/>
+                        <path d="M34 122H60V38H34C34 38 34 58 34 80C34 102 34 122 34 122Z" fill="#8AB4F8"/>
+                        <path d="M34 38H60V122H34V38Z" fill="#8AB4F8"/>
+                        <path d="M60 70H132V90H60V70Z" fill="#8AB4F8"/>
+                        <path d="M60 38H132V70H60V38Z" fill="#1A73E8"/>
+                        <path d="M60 90H132V122H60V90Z" fill="#1A73E8"/>
+                        <path d="M96 145H132V155H96V145Z" fill="#8AB4F8"/>
+                        <path d="M150 145H160V155H150V145Z" fill="#8AB4F8"/>
+                    </svg>
+                    <div class="sparkles sparkle-1"></div>
+                    <div class="sparkles sparkle-2"></div>
+                    <div class="sparkles sparkle-3"></div>
+                </div>
+                <h2>How can I help you today?</h2>
+                <p>Gemini is an AI assistant by Google built with Google's largest and most capable AI model for engaging conversations.</p>
+                
+                <div class="suggestion-chips">
+                    <div class="suggestion-chip">Tell me about yourself</div>
+                    <div class="suggestion-chip">Explain quantum computing</div>
+                    <div class="suggestion-chip">What's the theory of relativity?</div>
+                    <div class="suggestion-chip">Write a poem about space</div>
+                    <div class="suggestion-chip">Help me learn Python</div>
+                </div>
+            </div>
+            {% else %}
             <div class="chat-messages" id="chatMessages">
                 {% for chat in chat_history %}
                     <div class="message user-message">
+                        <div class="message-header">
+                            <div class="message-avatar user">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="message-sender">You</div>
+                        </div>
                         <div class="message-content">
                             <p>{{ chat.question }}</p>
                         </div>
+                        <div class="message-actions">
+                            <button class="message-action-btn"><i class="far fa-copy"></i> Copy</button>
+                        </div>
                     </div>
                     <div class="message bot-message">
+                        <div class="message-header">
+                            <div class="message-avatar bot">
+                                <svg width="16" height="16" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="gemini-mini-logo">
+                                    <path d="M132 38H158V122H132V38Z" fill="#8AB4F8"/>
+                                    <path d="M34 38H60V122H34V38Z" fill="#8AB4F8"/>
+                                    <path d="M60 70H132V90H60V70Z" fill="#8AB4F8"/>
+                                    <path d="M60 38H132V70H60V38Z" fill="#1A73E8"/>
+                                    <path d="M60 90H132V122H60V90Z" fill="#1A73E8"/>
+                                </svg>
+                            </div>
+                            <div class="message-sender">Gemini</div>
+                        </div>
                         <div class="message-content">
                             <p>{{ chat.response }}</p>
+                        </div>
+                        <div class="message-actions">
+                            <button class="message-action-btn"><i class="far fa-copy"></i> Copy</button>
+                            <button class="message-action-btn" title="Like this response"><i class="far fa-thumbs-up"></i></button>
+                            <button class="message-action-btn" title="Dislike this response"><i class="far fa-thumbs-down"></i></button>
                         </div>
                     </div>
                 {% endfor %}
             </div>
+            {% endif %}
+            
             <div class="chat-input-container">
                 <form method="post" id="chatForm">
                     <div class="input-wrapper">
                         <textarea name="question" placeholder="Message Gemini..." required></textarea>
-                        <button type="submit" class="send-button" id="sendButton">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
+                        <div class="input-actions">
+                            <button type="button" class="input-action-btn" title="Voice input"><i class="fas fa-microphone"></i></button>
+                            <button type="submit" class="send-button" id="sendButton" title="Send message">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
                     </div>
                 </form>
+                <div class="footer-text">
+                    <p>Gemini may display inaccurate info, including about people, so double-check its responses.</p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="background-animation"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -62,11 +148,29 @@
             const themeToggle = document.querySelector('.theme-toggle');
             const textarea = document.querySelector('textarea');
             const sendButton = document.getElementById('sendButton');
+            const suggestionChips = document.querySelectorAll('.suggestion-chip');
+            const welcomeScreen = document.querySelector('.welcome-screen');
 
             // Auto-resize textarea
             textarea.addEventListener('input', function() {
                 this.style.height = 'auto';
                 this.style.height = (this.scrollHeight) + 'px';
+                // Enable/disable send button based on content
+                if (this.value.trim().length > 0) {
+                    sendButton.classList.add('active');
+                } else {
+                    sendButton.classList.remove('active');
+                }
+            });
+
+            // Handle suggestion chips
+            suggestionChips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    textarea.value = this.textContent;
+                    textarea.style.height = (textarea.scrollHeight) + 'px';
+                    sendButton.classList.add('active');
+                    textarea.focus();
+                });
             });
 
             // Handle form submission
@@ -76,6 +180,21 @@
                 const question = formData.get('question').trim();
                 
                 if (!question) return;
+
+                // Hide welcome screen if visible
+                if (welcomeScreen) {
+                    welcomeScreen.style.display = 'none';
+                    if (!chatMessages) {
+                        // Create chat messages container if it doesn't exist yet
+                        const messagesContainer = document.createElement('div');
+                        messagesContainer.id = 'chatMessages';
+                        messagesContainer.className = 'chat-messages';
+                        document.querySelector('.main-content').insertBefore(
+                            messagesContainer, 
+                            document.querySelector('.chat-input-container')
+                        );
+                    }
+                }
 
                 // Disable input and show loading state
                 textarea.disabled = true;
@@ -98,23 +217,26 @@
                         addMessage(data.response, 'bot');
                     } else {
                         // Show error message
-                        addMessage(data.error || 'An error occurred. Please try again.', 'bot');
+                        addErrorMessage(data.error || 'An error occurred. Please try again.');
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    addMessage('An error occurred. Please try again.', 'bot');
+                    addErrorMessage('An error occurred. Please try again.');
                 } finally {
                     // Re-enable input and restore send button
                     textarea.disabled = false;
                     sendButton.disabled = false;
                     sendButton.innerHTML = '<i class="fas fa-paper-plane"></i>';
+                    sendButton.classList.remove('active');
                     
                     // Clear textarea
                     textarea.value = '';
                     textarea.style.height = 'auto';
                     
                     // Scroll to bottom
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    if (chatMessages) {
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
                 }
             });
 
@@ -126,7 +248,8 @@
                     });
                     
                     if (response.ok) {
-                        chatMessages.innerHTML = '';
+                        // Reload the page to show welcome screen
+                        window.location.reload();
                     } else {
                         const data = await response.json();
                         alert(data.error || 'Failed to clear chat history');
@@ -145,19 +268,137 @@
                 icon.classList.toggle('fa-sun');
             });
 
+            // Copy button functionality
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.message-action-btn i.far.fa-copy')) {
+                    const messageContent = e.target.closest('.message').querySelector('.message-content').textContent.trim();
+                    navigator.clipboard.writeText(messageContent)
+                        .then(() => {
+                            // Show feedback (you could add a small tooltip or notification)
+                            const button = e.target.closest('.message-action-btn');
+                            const originalText = button.innerHTML;
+                            button.innerHTML = '<i class="fas fa-check"></i> Copied';
+                            setTimeout(() => {
+                                button.innerHTML = originalText;
+                            }, 2000);
+                        })
+                        .catch(err => console.error('Failed to copy text: ', err));
+                }
+            });
+
             // Function to add messages
             function addMessage(text, type) {
+                if (!chatMessages) return;
+                
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${type}-message`;
+                
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'message-header';
+                
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = `message-avatar ${type}`;
+                
+                if (type === 'user') {
+                    const avatarIcon = document.createElement('i');
+                    avatarIcon.className = 'fas fa-user';
+                    avatarDiv.appendChild(avatarIcon);
+                } else {
+                    // Using SVG for Gemini logo in avatar
+                    avatarDiv.innerHTML = `
+                        <svg width="16" height="16" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="gemini-mini-logo">
+                            <path d="M132 38H158V122H132V38Z" fill="#8AB4F8"/>
+                            <path d="M34 38H60V122H34V38Z" fill="#8AB4F8"/>
+                            <path d="M60 70H132V90H60V70Z" fill="#8AB4F8"/>
+                            <path d="M60 38H132V70H60V38Z" fill="#1A73E8"/>
+                            <path d="M60 90H132V122H60V90Z" fill="#1A73E8"/>
+                        </svg>
+                    `;
+                }
+                
+                const senderDiv = document.createElement('div');
+                senderDiv.className = 'message-sender';
+                senderDiv.textContent = type === 'user' ? 'You' : 'Gemini';
+                
+                headerDiv.appendChild(avatarDiv);
+                headerDiv.appendChild(senderDiv);
                 
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'message-content';
                 
                 const p = document.createElement('p');
                 p.textContent = text;
-                
                 contentDiv.appendChild(p);
+                
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'message-actions';
+                
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'message-action-btn';
+                copyBtn.innerHTML = '<i class="far fa-copy"></i> Copy';
+                copyBtn.title = "Copy text";
+                actionsDiv.appendChild(copyBtn);
+                
+                if (type === 'bot') {
+                    const thumbsUpBtn = document.createElement('button');
+                    thumbsUpBtn.className = 'message-action-btn';
+                    thumbsUpBtn.innerHTML = '<i class="far fa-thumbs-up"></i>';
+                    thumbsUpBtn.title = "Like this response";
+                    
+                    const thumbsDownBtn = document.createElement('button');
+                    thumbsDownBtn.className = 'message-action-btn';
+                    thumbsDownBtn.innerHTML = '<i class="far fa-thumbs-down"></i>';
+                    thumbsDownBtn.title = "Dislike this response";
+                    
+                    actionsDiv.appendChild(thumbsUpBtn);
+                    actionsDiv.appendChild(thumbsDownBtn);
+                }
+                
+                messageDiv.appendChild(headerDiv);
                 messageDiv.appendChild(contentDiv);
+                messageDiv.appendChild(actionsDiv);
+                
+                chatMessages.appendChild(messageDiv);
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Function to add error messages
+            function addErrorMessage(text) {
+                if (!chatMessages) return;
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message bot-message';
+                
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'message-header';
+                
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = 'message-avatar bot';
+                
+                const avatarIcon = document.createElement('i');
+                avatarIcon.className = 'fas fa-exclamation-triangle';
+                avatarDiv.appendChild(avatarIcon);
+                
+                const senderDiv = document.createElement('div');
+                senderDiv.className = 'message-sender';
+                senderDiv.textContent = 'Error';
+                
+                headerDiv.appendChild(avatarDiv);
+                headerDiv.appendChild(senderDiv);
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content error';
+                contentDiv.style.color = 'var(--error-color)';
+                
+                const p = document.createElement('p');
+                p.textContent = text;
+                contentDiv.appendChild(p);
+                
+                messageDiv.appendChild(headerDiv);
+                messageDiv.appendChild(contentDiv);
+                
                 chatMessages.appendChild(messageDiv);
                 
                 // Scroll to bottom

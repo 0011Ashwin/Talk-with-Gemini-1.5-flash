@@ -129,4 +129,10 @@ def new_chat():
         }), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Fix for "ValueError: signal only works in main thread of the main interpreter"
+    # Disable the reloader and run in threaded mode
+    app.run(debug=False, threaded=True)
+    
+    # Alternative approach if above doesn't work:
+    # import werkzeug.serving
+    # werkzeug.serving.run_simple('localhost', 5000, app, use_debugger=True, use_reloader=False)
